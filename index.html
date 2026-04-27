@@ -877,8 +877,6 @@ body > *:not(#print-area){display:none!important}
 
 <div id="print-area" style="display:none"></div>
 <script>
-'use strict';
-
 // ═══════════════════════════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════════════════════════
@@ -1855,6 +1853,7 @@ window.addEventListener(‘resize’, () => { resize(); mkPts(); });
 // ═══════════════════════════════════════════════════════════
 
 function buildCsel(sel) {
+if (!sel || !sel.parentNode) return;
 if (sel.dataset.csel) return;
 sel.dataset.csel = ‘1’;
 
@@ -1931,10 +1930,10 @@ document.querySelectorAll(’.csel.open’).forEach(w => w.classList.remove(‘o
 // ═══════════════════════════════════════════════════════════
 
 document.addEventListener(‘DOMContentLoaded’, () => {
-initCanvas();
-initCustomSelects();
-updateNav();
-renderHome();
+try { initCanvas(); } catch(e) { console.warn(‘canvas:’, e); }
+try { initCustomSelects(); } catch(e) { console.warn(‘selects:’, e); }
+try { updateNav(); } catch(e) { console.warn(‘nav:’, e); }
+try { renderHome(); } catch(e) { console.warn(‘home:’, e); }
 });
 
 </script>
